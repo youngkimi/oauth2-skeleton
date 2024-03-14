@@ -31,6 +31,7 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/letter4u?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
@@ -38,7 +39,7 @@ spring:
     password: ${MYSQL_PASSWORD}
 
 jwt:
-  secretKey: ${JWT_SECRET_KEY}
+  secret-key: ${JWT_SECRET_KEY}
   access:
     expiration: 1800000 # 30 mins (180000L secs)
     header: Authorization-access
