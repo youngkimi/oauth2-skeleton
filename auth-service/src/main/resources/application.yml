@@ -1,6 +1,7 @@
 server:
   port: 8081
 
+
 spring:
   security:
     oauth2:
@@ -28,6 +29,10 @@ spring:
     url: jdbc:mysql://localhost:3306/letter4u?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}

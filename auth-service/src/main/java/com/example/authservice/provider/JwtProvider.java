@@ -18,14 +18,14 @@ public class JwtProvider {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    public String create(Long memberId) {
+    public String create(String OAtuh2Id) {
 
         Date expiredDate = Date.from(Instant.now().plus(30, ChronoUnit.MINUTES));
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes((StandardCharsets.UTF_8)));
 
         return Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS256)
-                .setSubject(String.valueOf(memberId))
+                .setSubject(OAtuh2Id)
                 .setIssuedAt(new Date())
                 .setExpiration(expiredDate)
                 .compact();
