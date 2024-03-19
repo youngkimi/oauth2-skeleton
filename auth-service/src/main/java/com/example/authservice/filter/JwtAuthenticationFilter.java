@@ -37,7 +37,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-
             String token = parseBearerToken(request);
 
             if (token == null) {
@@ -52,7 +51,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return ;
             }
 
-            Member member = memberRepository.findByMemberId(Integer.parseInt(memberId));
+//            Member member = memberRepository.findByMemberId(Integer.parseInt(memberId));
+            Member member = memberRepository.findMemberByOAuth2Id(memberId);
             Role role = member.getRole();
 
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role.toString()));

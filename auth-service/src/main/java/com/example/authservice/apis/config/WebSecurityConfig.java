@@ -1,4 +1,4 @@
-package com.example.authservice.api.config;
+package com.example.authservice.apis.config;
 
 import com.example.authservice.filter.JwtAuthenticationFilter;
 import com.example.authservice.handler.OAuth2SuccessHandler;
@@ -84,7 +84,6 @@ public class WebSecurityConfig {
 }
 
 class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {

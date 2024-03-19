@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
     Member findByMemberId(Integer memberId);
+    Member findMemberByOAuth2Id(String OAuth2Id);
 }
 

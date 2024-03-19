@@ -18,14 +18,14 @@ public class JwtProvider {
     @Value("${jwt.secret-key}")
     private String secretKey;
 
-    public String create(String OAtuh2Id) {
+    public String create(String OAuth2Id) {
 
         Date expiredDate = Date.from(Instant.now().plus(30, ChronoUnit.MINUTES));
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes((StandardCharsets.UTF_8)));
 
         return Jwts.builder()
                 .signWith(key, SignatureAlgorithm.HS256)
-                .setSubject(OAtuh2Id)
+                .setSubject(OAuth2Id)
                 .setIssuedAt(new Date())
                 .setExpiration(expiredDate)
                 .compact();
@@ -48,6 +48,8 @@ public class JwtProvider {
             e.printStackTrace();
             return null;
         }
+
+        System.out.println(subject);
 
         return subject;
     }

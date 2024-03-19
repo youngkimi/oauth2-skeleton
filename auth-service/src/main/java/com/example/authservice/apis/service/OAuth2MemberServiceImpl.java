@@ -1,4 +1,4 @@
-package com.example.authservice.api.service;
+package com.example.authservice.apis.service;
 
 import com.example.authservice.db.entity.CustomOAuth2User;
 import com.example.authservice.db.entity.Member;
@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 
 import static com.example.authservice.db.entity.Provider.KAKAO;
@@ -82,6 +81,7 @@ public class OAuth2MemberServiceImpl extends DefaultOAuth2UserService {
 
         log.info(member.toString());
 
+        // 존재 확인 후 save
         memberRepository.save(member);
 
         return new CustomOAuth2User(OAuth2Id);
