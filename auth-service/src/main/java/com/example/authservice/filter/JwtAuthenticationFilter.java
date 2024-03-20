@@ -6,6 +6,7 @@ import com.example.authservice.db.repository.MemberRepository;
 import com.example.authservice.provider.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return ;
             }
 
-//            Member member = memberRepository.findByMemberId(Integer.parseInt(memberId));
-            Member member = memberRepository.findMemberByOAuth2Id(memberId);
+            Member member = memberRepository.findByMemberId(Integer.parseInt(memberId));
+//            Member member = memberRepository.findMemberByOAuth2Id(memberId);
             Role role = member.getRole();
 
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role.toString()));
@@ -78,17 +79,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String parseBearerToken(HttpServletRequest request) {
 
-        String authorization = request.getHeader("Authorization");
-        // Authorization 보유하고 있나?
-        boolean hasAuthorization = StringUtils.hasText(authorization);
+        Cookie[] cookies = request.getCookies();
 
-        if (! hasAuthorization) return null;
-        // Bearer 방식인가?
-        boolean isBearer = authorization.startsWith("Bearer ");
-        if (! isBearer) return null;
+//        boolean hasAuthorization = false;
+//        String authorization = request.getHeader("Authorization");
+//        Authorization 보유하고 있나?
+//        if (! hasAuthorization) return null;
+//        Bearer 방식인가?
+//        boolean isBearer = authorization.startsWith("Bearer ");
+//        if (! isBearer) return null;
+//
+//        String token = authorization.substring(7);
+        String accessToken = null;
 
-        String token = authorization.substring(7);
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("access-token")) {
+                accessToken = cookie.getValue();
+                log.info("token type: ACCESS // token : " + accessToken);
+            }
+        }
 
-        return token;
+        if (accessToken == null) return null;
+
+        return accessToken;
     }
 }
