@@ -51,6 +51,13 @@ public class OAuth2MemberServiceImpl extends DefaultOAuth2UserService {
         switch(oauthClientName) {
             case "kakao":
                 OAuth2Id = "kakao_" + oAuth2User.getAttribute("id");
+                
+                member = memberRepository.findMemberByOAuth2Id(OAuth2Id);
+                
+                // 멤버가 존재하면 해당 멤버 정보 반환
+                if (member != null) {
+                    return new CustomOAuth2User(Integer.toString(member.getMemberId()));
+                }
 
                 Map<String, String> kakaoAccountInfo = oAuth2User.getAttribute("kakao_account");
                 Map<String, String> kakaoProfileInfo = oAuth2User.getAttribute("properties");
@@ -82,8 +89,8 @@ public class OAuth2MemberServiceImpl extends DefaultOAuth2UserService {
         log.info(member.toString());
 
         // 존재 확인 후 save
-        memberRepository.save(member);
+        member = memberRepository.save(member);
 
-        return new CustomOAuth2User(OAuth2Id);
+        return new CustomOAuth2User(Integer.toString(member.getMemberId()));
     }
 }
